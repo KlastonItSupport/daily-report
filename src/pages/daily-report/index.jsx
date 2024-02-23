@@ -1,13 +1,11 @@
-import { useParams } from "react-router-dom";
 import {
   ButtonContainer,
-  CantSendContainer,
-  CantSendMessage,
-  CantSendMessageTitle,
+  InputCalendarContainer,
+  CalendarContainer,
   Container,
   Form,
-  Image,
   Row,
+  FormTitle,
 } from "./style";
 import Input from "../../components/input/index";
 import SelectInput from "../../components/select";
@@ -18,8 +16,12 @@ import { Button } from "../../components/button";
 import { scheme } from "./schema";
 import { useReports } from "../../hooks/reports";
 import { useEffect, useState } from "react";
-import klastonLogo from "../../assets/klastonblue.png";
 import LoadingSpin from "../../components/loading";
+import { useAuth } from "../../hooks/auth";
+import { CalendarChanged } from "../../components/calendar";
+import Popup from "reactjs-popup";
+import { LoadingModalContent } from "../../components/loading-modal-content";
+import { PropagateLoader } from "react-spinners";
 
 const options = [
   { value: 1, label: "Auditoria" },
@@ -28,24 +30,24 @@ const options = [
 ];
 
 export const CreateDailyReportPage = () => {
-  const params = useParams();
-  const [isAllowedToSend, setIsAllowedToSend] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const { sendReportToClient, canSendReport, reportId } = useReports();
+  const [isShowingCalendar, setIsShowingCalendar] = useState(false);
 
-  const onLoad = async () => {
-    const isAllowed = await canSendReport(params.id);
+  const { user, getUser, dealingWithAuth } = useAuth();
+  const { sendReportToClient, isLoadingRequest } = useReports();
 
-    reportId.current = params.id;
-    setIsAllowedToSend(isAllowed);
-
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 2000);
+  const onLoad = () => {
+    dealingWithAuth(false);
+    if (!user.current) {
+      getUser();
+    }
+    setIsLoading(false);
   };
 
   useEffect(() => {
     onLoad();
+    setValue("professionalName", user.current?.name);
+    setValue("professionalEmail", user.current?.email);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -53,27 +55,33 @@ export const CreateDailyReportPage = () => {
     handleSubmit,
     register,
     formState: { errors },
+    setValue,
   } = useForm({
     resolver: yupResolver(scheme),
   });
 
   return isLoading ? (
     <LoadingSpin />
-  ) : isAllowedToSend ? (
+  ) : (
     <Container>
       <Form onSubmit={handleSubmit(sendReportToClient)}>
+        <FormTitle>Daily Report</FormTitle>
+
         <Row>
           <Input
             label={"Nome do profissional"}
             {...register("professionalName")}
             error={errors.professionalName?.message}
             margin="0px 20px 0px 0px"
+            disabled={true}
           />
 
           <Input
             label={"Email do profissional"}
             {...register("professionalEmail")}
             error={errors.professionalEmail?.message}
+            value={user.current?.email}
+            disabled={true}
           />
         </Row>
         <Row>
@@ -105,13 +113,35 @@ export const CreateDailyReportPage = () => {
           />
         </Row>
         <Row>
-          <Input
-            label="Dia em que foi feito o serviço"
-            placeholder={"Ex: 28/09/2024"}
-            {...register("serviceDate")}
-            error={errors.serviceDate?.message}
-            margin="0px 20px 0px 0px"
-          />
+          <InputCalendarContainer>
+            <Input
+              label="Dia em que foi feito o serviço"
+              placeholder={"Ex:  28/09/2024"}
+              {...register("serviceDate")}
+              error={errors.serviceDate?.message}
+              margin="0px 20px 0px 0px"
+              onClick={() => setIsShowingCalendar(!isShowingCalendar)}
+              autocomplete="off"
+              onChange={(e) => {
+                if (e.target.value.length === 10) setIsShowingCalendar(false);
+              }}
+            />
+            {isShowingCalendar && (
+              <CalendarContainer>
+                <CalendarChanged
+                  onChangeDate={(date) => {
+                    const day = String(date.getDate()).padStart(2, "0");
+                    const month = String(date.getMonth() + 1).padStart(2, "0"); // O mês é baseado em zero, então adicionamos 1
+                    const year = date.getFullYear();
+                    const formattedDate = `${day}/${month}/${year}`;
+
+                    setValue("serviceDate", formattedDate);
+                    setIsShowingCalendar(false);
+                  }}
+                />
+              </CalendarContainer>
+            )}
+          </InputCalendarContainer>
         </Row>
         <TextArea
           label={"Serviço Executado"}
@@ -137,20 +167,57 @@ export const CreateDailyReportPage = () => {
           label={"Tipo de serviço"}
           {...register("serviceType")}
         />
-
-        <ButtonContainer>
-          <Button type=""> Gerar Daily Report</Button>
-        </ButtonContainer>
+        <Popup
+          modal
+          trigger={
+            <ButtonContainer>
+              <Button type="" onClick={(e) => e.preventDefault()}>
+                {" "}
+                Gerar Daily Report
+              </Button>
+            </ButtonContainer>
+          }
+          closeOnDocumentClick={false}
+          lockScroll={true}
+          position={"bottom center"}
+          contentStyle={{
+            margin: "auto",
+            border: "none",
+            padding: "0",
+          }}
+          overlayStyle={{
+            backgroundColor: isLoadingRequest
+              ? "transparent"
+              : "rgba(0, 0, 0, 0.5)",
+          }}
+        >
+          {(close) =>
+            isLoadingRequest ? (
+              <div
+                style={{
+                  background: "rgba(0, 0, 0, 0.5)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  zIndex: 1000,
+                }}
+              >
+                <PropagateLoader color="#17033a" />
+              </div>
+            ) : (
+              <LoadingModalContent
+                onClose={close}
+                onSubmit={() => {
+                  handleSubmit(async (data) => {
+                    await sendReportToClient(data);
+                    close();
+                  })();
+                }}
+              />
+            )
+          }
+        </Popup>
       </Form>
     </Container>
-  ) : (
-    <CantSendContainer>
-      <Image src={klastonLogo} alt="klaston logo" />
-      <CantSendMessageTitle>Permissão negada</CantSendMessageTitle>
-      <CantSendMessage>
-        Esse formulário já foi enviado. Para o envio de um novo formulário, por
-        favor entre em contato com a nossa administração.
-      </CantSendMessage>
-    </CantSendContainer>
   );
 };

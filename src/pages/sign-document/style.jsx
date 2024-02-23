@@ -41,3 +41,11 @@ export const Image = styled.img`
   height: 40px;
   margin-top: 50px;
 `;
+export const SignButtonsContainer = styled.div`
+  display: flex;
+  padding: 20px;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
+`;

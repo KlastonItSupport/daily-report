@@ -20,11 +20,12 @@ import Modal from "../../components/modal";
 import { FormCreateDailyReport } from "../../components/form/form-create-daily-report";
 import LoadingSpin from "../../components/loading";
 import DataTable from "../../components/table";
+import { useNavigate } from "react-router-dom";
 
 export const HomePage = () => {
-  const { dealingWithAuth, getUser } = useAuth();
+  const { dealingWithAuth, getUser, user } = useAuth();
   const [isLoading, setIsLoading] = useState(true);
-  const user = useRef();
+  const history = useNavigate();
 
   const {
     getReports,
@@ -37,7 +38,7 @@ export const HomePage = () => {
   } = useReports();
 
   const onLoading = async () => {
-    dealingWithAuth();
+    dealingWithAuth(true);
     user.current = getUser();
     getReports(user.current.id);
 
@@ -56,7 +57,7 @@ export const HomePage = () => {
     <Container>
       <Image src={logoKlaston} alt="klaston logo" />
       <Header>
-        <WelcomeMessage>Bem vindo, Cristiano</WelcomeMessage>
+        <WelcomeMessage>Bem vindo, {user.current.name}</WelcomeMessage>
         <InputsContainer>
           <CheckBoxContainer>
             <Checkbox
@@ -82,13 +83,14 @@ export const HomePage = () => {
           </ContainerInput>
         </InputsContainer>
       </Header>
-      {/* <CardList reports={reports} /> */}
       <DataTable data={reports} />
-      <ButtonContainer>
-        <Button onClick={handleModalToggle} type="">
-          Gerar Daily Report
-        </Button>
-      </ButtonContainer>
+      {user.current.permission !== "admin" && (
+        <ButtonContainer>
+          <Button onClick={() => history("/create/report")} type="">
+            Gerar Daily Report
+          </Button>
+        </ButtonContainer>
+      )}
 
       <Modal isOpen={isModalOpen} onClose={handleModalToggle}>
         <FormCreateDailyReport />

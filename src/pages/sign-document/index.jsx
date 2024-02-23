@@ -16,28 +16,33 @@ import {
   Image,
   CantSendMessageTitle,
   CantSendMessage,
+  SignButtonsContainer,
 } from "./style";
 import { api } from "../../api";
 import LoadingSpin from "../../components/loading";
+import { PropagateLoader } from "react-spinners";
 
 export const SignDocumentPage = () => {
   const { signDocument } = useReports();
   const [isLoading, setLoading] = useState(true);
+  const [isReqLoading, setIsReqLoading] = useState(false);
   const [reportService, setReportService] = useState({});
   const sigCanvas = useRef({});
   const params = useParams();
 
   const clear = () => sigCanvas.current.clear();
-  const save = (closeModal) => {
+
+  const save = async (closeModal) => {
+    setIsReqLoading(true);
     const imageDataURL = sigCanvas.current
       .getTrimmedCanvas()
       .toDataURL("image/png");
 
-    signDocument(imageDataURL, params.dailyReportId, closeModal);
+    await signDocument(imageDataURL, params.dailyReportId, closeModal);
+    setIsReqLoading(false);
   };
 
   const getServiceInfoById = async (id) => {
-    console.log("eentrei");
     await api.get(`service-info/report/by/id/${id}`).then((response) => {
       setReportService(response.data);
       setLoading(false);
@@ -46,6 +51,7 @@ export const SignDocumentPage = () => {
 
   useEffect(() => {
     getServiceInfoById(params.dailyReportId);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return isLoading ? (
@@ -78,35 +84,62 @@ export const SignDocumentPage = () => {
         }
         closeOnDocumentClick={false}
         position={"bottom center"}
-        contentStyle={{ width: "50%", margin: "auto" }}
+        contentStyle={{
+          margin: "auto",
+          border: "none",
+          padding: "0",
+          minWidth: 300,
+        }}
+        overlayStyle={{
+          backgroundColor: isReqLoading ? "transparent" : "rgba(0, 0, 0, 0.5)",
+        }}
       >
-        {(close) => (
-          <>
-            <SignaturePad
-              ref={sigCanvas}
-              canvasProps={{
-                className: "signatureCanvas",
+        {(close) =>
+          isReqLoading ? (
+            <div
+              style={{
+                background: "rgba(0, 0, 0, 0.5)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
               }}
-            />
-            <Button
-              onClick={() => save(close)}
-              color={"#0F62FE"}
-              margin={"0px 10px 0px 0px"}
             >
-              Assinar e enviar
-            </Button>
-            <Button
-              onClick={clear}
-              color={"#eacc07"}
-              margin={"0px 10px 0px 0px"}
-            >
-              Limpar
-            </Button>
-            <Button onClick={close} color={"#FF4742"}>
-              Fechar
-            </Button>
-          </>
-        )}
+              <PropagateLoader color="#17033a" />
+            </div>
+          ) : (
+            <>
+              <SignaturePad
+                ref={sigCanvas}
+                canvasProps={{
+                  className: "signatureCanvas",
+                }}
+              />
+              <SignButtonsContainer>
+                <Button
+                  onClick={() => save(close)}
+                  color={"#0F62FE"}
+                  margin={"0px 10px 10px 0px"}
+                >
+                  Assinar e enviar
+                </Button>
+                <Button
+                  onClick={clear}
+                  color={"#eacc07"}
+                  margin={"0px 10px 10px 0px"}
+                >
+                  Limpar
+                </Button>
+                <Button
+                  onClick={close}
+                  color={"#FF4742"}
+                  margin={"0px 10px 10px 0px"}
+                >
+                  Fechar
+                </Button>
+              </SignButtonsContainer>
+            </>
+          )
+        }
       </Popup>
     </Container>
   );

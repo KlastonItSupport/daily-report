@@ -4,6 +4,10 @@ export const StyledTable = styled.div`
   overflow: auto;
   height: 700px;
   max-width: 100%;
+
+  @media (max-width: 768px) {
+    height: 60vh;
+  }
 `;
 
 export const Table = styled.table`

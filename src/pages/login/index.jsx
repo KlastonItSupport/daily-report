@@ -11,7 +11,7 @@ export const LoginPage = () => {
     useAuth();
 
   const onLoading = async () => {
-    await dealingWithAuth();
+    dealingWithAuth(true);
 
     setTimeout(() => {
       setIsLoading(false);

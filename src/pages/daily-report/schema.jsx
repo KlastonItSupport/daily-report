@@ -30,17 +30,23 @@ export const scheme = yup.object().shape({
 
   serviceDate: yup
     .string()
+    .required("* Data obrigatória")
     .matches(
       /^\d{2}\/\d{2}\/\d{4}$/,
       "Formato inválido. Formato correto: dd/mm/yyyy"
-    )
-    .required("* Data obrigatória"),
+    ),
   serviceType: yup.string().required("* Tipo de serviço obrigatório"),
   executedService: yup
     .string()
     .required("* Serviço executado obrigatório")
     .max(1200, "Limite de 1200 caracteres")
-    .matches(/^[^\r\n]*$/, "Não são permitidas quebras de linha no campo"),
+    .test("max-line-breaks", "Limite de 3 quebras de linha", (value) => {
+      if (value) {
+        const lineBreaks = value.match(/\r\n|\r|\n/g);
+        return lineBreaks ? lineBreaks.length <= 3 : true;
+      }
+      return true;
+    }),
 
   pendencies: yup
     .string()

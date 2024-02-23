@@ -12,6 +12,7 @@ import * as yup from "yup";
 import { Button } from "../../button";
 import { useReports } from "../../../hooks/reports";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const scheme = yup.object().shape({
   professionalEmail: yup
@@ -23,6 +24,7 @@ const scheme = yup.object().shape({
 
 export const FormCreateDailyReport = () => {
   const [link, setLink] = useState("");
+  const history = useNavigate();
   const {
     handleSubmit,
     register,
@@ -36,6 +38,7 @@ export const FormCreateDailyReport = () => {
   const onSubmit = async (data) => {
     const response = await createReport(data);
     setLink(response);
+    history("/create/report");
   };
   return (
     <Container>

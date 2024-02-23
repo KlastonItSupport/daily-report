@@ -1,8 +1,6 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { api } from "../api";
 import { toast } from "react-toastify";
-import { useParams } from "react-router-dom";
-import { dataURLToBlob } from "../helpers/image";
 
 export const useReports = () => {
   const reportId = useRef();
@@ -12,6 +10,7 @@ export const useReports = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [checkedCheckBox, setCheckedCheckBox] = useState(0);
   const [number, setNumber] = useState(1);
+  const [isLoadingRequest, setIsLoadingRequest] = useState(false);
 
   const getReports = async (id) => {
     const response = await api.get(`/service-info/${id}`);
@@ -31,7 +30,6 @@ export const useReports = () => {
   const createReport = async (data) => {
     try {
       const response = await api.post("/service-info/report", { ...data });
-      toast.success("Report Criado com sucesso.");
       return response.data.link;
     } catch (e) {
       toast.error("Ocorreu um erro ao criar um report.");
@@ -63,6 +61,7 @@ export const useReports = () => {
   };
 
   const sendReportToClient = async (data) => {
+    setIsLoadingRequest(true);
     const dateString = data.serviceDate;
     const [day, month, year] = dateString.split("/");
 
@@ -74,15 +73,7 @@ export const useReports = () => {
     } catch (_) {
       toast.error("Ocorreu um erro ao criar um report.");
     }
-  };
-
-  const canSendReport = async (id) => {
-    try {
-      const response = await api.get(`/service-info/report/${id}`);
-      return response.data.canSend;
-    } catch (_) {
-      return false;
-    }
+    setIsLoadingRequest(false);
   };
 
   const getReportPdfBuffer = async (id, sign) => {
@@ -143,11 +134,11 @@ export const useReports = () => {
     handleCheckBox,
     filterReports,
     sendReportToClient,
-    canSendReport,
     reportId,
     pdfData,
     fetchPdfData,
     signDocument,
     number,
+    isLoadingRequest,
   };
 };

@@ -27,7 +27,6 @@ const DataTable = ({ data }) => {
             <TableCell>Fim do serviço</TableCell>
             <TableCell>Data do serviço</TableCell>
             <TableCell>Tipo do serviço</TableCell>
-            <TableCell>Preço do serviço</TableCell>
             <TableCell>Serviço executado</TableCell>
             <TableCell>Pendências</TableCell>
             <TableCell>Planejamento</TableCell>
@@ -44,7 +43,6 @@ const DataTable = ({ data }) => {
               <TableCell>{row.endDate}</TableCell>
               <TableCell>{row.serviceDate}</TableCell>
               <TableCell>{handleServiceType(row.serviceType)}</TableCell>
-              <TableCell>{row.servicePrice}</TableCell>
               <TableCell>{row.executedService}</TableCell>
               <TableCell>{row.pendencies}</TableCell>
               <TableCell>{row.planning}</TableCell>

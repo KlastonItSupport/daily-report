@@ -10,6 +10,17 @@ export const Container = styled.div`
 export const Form = styled.form`
   margin-top: 20px;
 `;
+export const FormTitle = styled.h1`
+  font-size: 24px;
+  padding: 10px 0px;
+  color: #17033a;
+`;
+
+export const FormDescription = styled.h1`
+  font-size: 15px;
+  padding: 10px 0px 20px 0px;
+`;
+
 export const ButtonContainer = styled.div`
   display: flex;
   justify-content: center;
@@ -45,4 +56,18 @@ export const Image = styled.img`
   width: 140px;
   height: 40px;
   margin-top: 50px;
+`;
+
+export const InputCalendarContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+export const CalendarContainer = styled.div`
+  position: absolute;
+  top: 385px;
+
+  @media (max-width: 768px) {
+    top: 625px;
+  }
 `;

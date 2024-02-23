@@ -22,7 +22,7 @@ const router = createBrowserRouter([
     element: <HomePage />,
   },
   {
-    path: "create/report/:id",
+    path: "create/report",
     element: <CreateDailyReportPage />,
   },
   {

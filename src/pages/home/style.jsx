@@ -49,10 +49,11 @@ export const CheckBoxContainer = styled.div`
   width: 50%;
   display: flex;
 `;
+
 export const ButtonContainer = styled.div`
-  width: 300px;
-  position: absolute;
+  position: fixed;
   bottom: 10px;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 0;
+  right: 0;
+  text-align: center;
 `;
