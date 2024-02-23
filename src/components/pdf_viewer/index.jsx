@@ -20,7 +20,7 @@ export const PdfViewer = ({ id }) => {
               title="pdfteste"
               src={pdfData.url}
               width="100%"
-              height="500px"
+              style={{ height: "80vh" }}
             />
           )}
         </div>
