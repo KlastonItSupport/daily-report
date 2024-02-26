@@ -173,7 +173,7 @@ export const CreateDailyReportPage = () => {
             <ButtonContainer>
               <Button type="" onClick={(e) => e.preventDefault()}>
                 {" "}
-                Gerar Daily Report
+                Enviar para assinatura do cliente
               </Button>
             </ButtonContainer>
           }

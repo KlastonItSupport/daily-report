@@ -38,5 +38,10 @@ export const TableBody = styled.tbody`
 export const TableCell = styled.td`
   padding: 8px;
   border: 1px solid #ddd;
-  min-width: 100px;
+
+  div {
+    max-height: 90px;
+    width: 200px;
+    overflow: auto;
+  }
 `;

@@ -84,13 +84,12 @@ export const HomePage = () => {
         </InputsContainer>
       </Header>
       <DataTable data={reports} />
-      {user.current.permission !== "admin" && (
-        <ButtonContainer>
-          <Button onClick={() => history("/create/report")} type="">
-            Gerar Daily Report
-          </Button>
-        </ButtonContainer>
-      )}
+
+      <ButtonContainer>
+        <Button onClick={() => history("/create/report")} type="">
+          Gerar Daily Report
+        </Button>
+      </ButtonContainer>
 
       <Modal isOpen={isModalOpen} onClose={handleModalToggle}>
         <FormCreateDailyReport />

@@ -43,9 +43,15 @@ const DataTable = ({ data }) => {
               <TableCell>{row.endDate}</TableCell>
               <TableCell>{row.serviceDate}</TableCell>
               <TableCell>{handleServiceType(row.serviceType)}</TableCell>
-              <TableCell>{row.executedService}</TableCell>
-              <TableCell>{row.pendencies}</TableCell>
-              <TableCell>{row.planning}</TableCell>
+              <TableCell>
+                <div>{row.executedService}</div>
+              </TableCell>
+              <TableCell>
+                <div>{row.pendencies}</div>
+              </TableCell>
+              <TableCell>
+                <div>{row.planning}</div>
+              </TableCell>
             </tr>
           ))}
         </TableBody>

@@ -1,4 +1,4 @@
-import React, { forwardRef } from "react";
+import React, { forwardRef, useState } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 
@@ -28,6 +28,11 @@ const TextAreaField = styled.textarea`
   }
 `;
 
+const Counter = styled.p`
+  font-size: 12px;
+  margin-top: 4px;
+`;
+
 const ErrorLabel = styled.p`
   font-size: 12px;
   margin-top: 4px;
@@ -35,10 +40,18 @@ const ErrorLabel = styled.p`
 `;
 
 const TextArea = forwardRef(({ label, error, ...rest }, ref) => {
+  const [charCount, setCharCount] = useState(0);
+
+  const handleInputChange = (event) => {
+    const inputValue = event.target.value;
+    setCharCount(inputValue.length);
+  };
+
   return (
     <TextAreaContainer>
       <Label>{label}</Label>
-      <TextAreaField ref={ref} {...rest} />
+      <TextAreaField ref={ref} onChange={handleInputChange} {...rest} />
+      <Counter>{`${charCount} caracteres`}</Counter>
       {error && <ErrorLabel>{error}</ErrorLabel>}
     </TextAreaContainer>
   );

@@ -40,6 +40,23 @@ export const scheme = yup.object().shape({
     .string()
     .required("* Serviço executado obrigatório")
     .max(1200, "Limite de 1200 caracteres")
+    .test("max-line-breaks", "Limite de 5 quebras de linha", (value) => {
+      if (value) {
+        const lineBreaks = value.match(/\r\n|\r|\n/g);
+        return lineBreaks ? lineBreaks.length <= 5 : true;
+      }
+      return true;
+    }),
+
+  pendencies: yup
+    .string()
+    .required("* Pendências obrigatórias")
+    .test("max-length", "Limite de 700 caracteres", (value) => {
+      if (value) {
+        return value.length <= 700;
+      }
+      return true;
+    })
     .test("max-line-breaks", "Limite de 3 quebras de linha", (value) => {
       if (value) {
         const lineBreaks = value.match(/\r\n|\r|\n/g);
@@ -48,20 +65,15 @@ export const scheme = yup.object().shape({
       return true;
     }),
 
-  pendencies: yup
-    .string()
-    .required("* Pendências obrigatórias")
-    .matches(/^[^\r\n]*$/, "Não são permitidas quebras de linha no campo")
-    .test("max-length", "Limite de 700 caracteres", (value) => {
-      if (value) {
-        return value.length <= 700;
-      }
-      return true;
-    }),
-
   planning: yup
     .string()
     .required("* Planejamento obrigatório")
     .max(500, "Limite de 500 caracteres")
-    .matches(/^[^\r\n]*$/, "Não são permitidas quebras de linha no campo"),
+    .test("max-line-breaks", "Limite de 3 quebras de linha", (value) => {
+      if (value) {
+        const lineBreaks = value.match(/\r\n|\r|\n/g);
+        return lineBreaks ? lineBreaks.length <= 3 : true;
+      }
+      return true;
+    }),
 });
