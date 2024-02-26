@@ -70,8 +70,7 @@ export const SignDocumentPage = () => {
       <Title>Assinatura do Daily Report </Title>
       <Description>
         Por favor, revise o PDF e assine-o. Após assinado será enviado uma cópia
-        para o profissional prestador do serviço e também para nós da Klaston
-        Managment
+        para o profissional prestador do serviço e para o seu email
       </Description>
 
       <PdfViewer id={params.dailyReportId} />
