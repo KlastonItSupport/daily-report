@@ -79,7 +79,7 @@ export const SignDocumentPage = () => {
         modal
         trigger={
           <ButtonContainer>
-            <Button>Abrir Modal de assinatura</Button>
+            <Button>Clique aqui para assinar</Button>
           </ButtonContainer>
         }
         closeOnDocumentClick={false}
