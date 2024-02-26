@@ -163,6 +163,7 @@ export const CreateDailyReportPage = () => {
           error={errors.planning?.message}
         />
         <SelectInput
+          defaultValue={2}
           options={options}
           label={"Tipo de serviço"}
           {...register("serviceType")}
