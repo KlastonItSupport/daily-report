@@ -9,7 +9,7 @@ import {
 } from "./style";
 import Input from "../../components/input/index";
 import SelectInput from "../../components/select";
-import TextArea from "../../components/text_area";
+import { TextArea } from "../../components/text_area";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { Button } from "../../components/button";
@@ -145,8 +145,8 @@ export const CreateDailyReportPage = () => {
         </Row>
         <TextArea
           label={"Serviço Executado"}
-          {...register("executedService")}
           error={errors.executedService?.message}
+          {...register("executedService")}
         />
         <TextArea
           label={"Pendências"}

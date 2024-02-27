@@ -1,5 +1,5 @@
+// TextArea.js
 import React, { forwardRef, useState } from "react";
-import PropTypes from "prop-types";
 import styled from "styled-components";
 
 const TextAreaContainer = styled.div`
@@ -39,7 +39,7 @@ const ErrorLabel = styled.p`
   color: red;
 `;
 
-const TextArea = forwardRef(({ label, error, ...rest }, ref) => {
+export const TextArea = forwardRef(({ label, error, ...rest }, ref) => {
   const [charCount, setCharCount] = useState(0);
 
   const handleInputChange = (event) => {
@@ -50,16 +50,9 @@ const TextArea = forwardRef(({ label, error, ...rest }, ref) => {
   return (
     <TextAreaContainer>
       <Label>{label}</Label>
-      <TextAreaField ref={ref} onChange={handleInputChange} {...rest} />
+      <TextAreaField ref={ref} {...rest} onChange={handleInputChange} />
       <Counter>{`${charCount} caracteres`}</Counter>
       {error && <ErrorLabel>{error}</ErrorLabel>}
     </TextAreaContainer>
   );
 });
-
-TextArea.propTypes = {
-  label: PropTypes.string,
-  error: PropTypes.string,
-};
-
-export default TextArea;
