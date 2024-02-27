@@ -39,20 +39,22 @@ const ErrorLabel = styled.p`
   color: red;
 `;
 
-export const TextArea = forwardRef(({ label, error, ...rest }, ref) => {
-  const [charCount, setCharCount] = useState(0);
+export const TextArea = forwardRef(
+  ({ label, error, maxCharacter, ...rest }, ref) => {
+    const [charCount, setCharCount] = useState(0);
 
-  const handleInputChange = (event) => {
-    const inputValue = event.target.value;
-    setCharCount(inputValue.length);
-  };
+    const handleInputChange = (event) => {
+      const inputValue = event.target.value;
+      setCharCount(inputValue.length);
+    };
 
-  return (
-    <TextAreaContainer>
-      <Label>{label}</Label>
-      <TextAreaField ref={ref} {...rest} onChange={handleInputChange} />
-      <Counter>{`${charCount} caracteres`}</Counter>
-      {error && <ErrorLabel>{error}</ErrorLabel>}
-    </TextAreaContainer>
-  );
-});
+    return (
+      <TextAreaContainer>
+        <Label>{label}</Label>
+        <TextAreaField ref={ref} {...rest} onChange={handleInputChange} />
+        <Counter>{`${charCount}/${maxCharacter} caracteres`}</Counter>
+        {error && <ErrorLabel>{error}</ErrorLabel>}
+      </TextAreaContainer>
+    );
+  }
+);
