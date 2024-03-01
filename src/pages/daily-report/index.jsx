@@ -151,7 +151,7 @@ export const CreateDailyReportPage = () => {
             label={"Serviço Executado"}
             error={errors.executedService?.message}
             {...register("executedService")}
-            maxCharacter={1200}
+            maxCharacter={2000}
           />
           <TextArea
             label={"Pendências"}
@@ -161,13 +161,13 @@ export const CreateDailyReportPage = () => {
                 ? errors.pendencies?.message
                 : errors.pendencies?.message
             }
-            maxCharacter={700}
+            maxCharacter={2000}
           />
           <TextArea
             label={"Planejamento"}
             {...register("planning")}
             error={errors.planning?.message}
-            maxCharacter={500}
+            maxCharacter={2000}
           />
           <SelectInput
             defaultValue={2}
