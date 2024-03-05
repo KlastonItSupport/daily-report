@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuth } from "../../hooks/auth";
 import {
   Container,
@@ -9,6 +9,7 @@ import {
   InputsContainer,
   CheckBoxContainer,
   ButtonContainer,
+  LogoutButtonContainer,
 } from "./style";
 import logoKlaston from "../../assets/klastonblue.png";
 import Checkbox from "../../components/checkbox";
@@ -23,7 +24,7 @@ import DataTable from "../../components/table";
 import { useNavigate } from "react-router-dom";
 
 export const HomePage = () => {
-  const { dealingWithAuth, getUser, user } = useAuth();
+  const { dealingWithAuth, getUser, user, logout } = useAuth();
   const [isLoading, setIsLoading] = useState(true);
   const history = useNavigate();
 
@@ -40,11 +41,11 @@ export const HomePage = () => {
   const onLoading = async () => {
     dealingWithAuth(true);
     user.current = getUser();
-    getReports(user.current.id);
+    getReports(user.current?.id);
 
     setTimeout(() => {
       setIsLoading(false);
-    }, 2000);
+    }, 1000);
   };
   useEffect(() => {
     onLoading();
@@ -55,6 +56,11 @@ export const HomePage = () => {
     <LoadingSpin />
   ) : (
     <Container>
+      <LogoutButtonContainer>
+        <Button onClick={logout} type="">
+          Logout
+        </Button>
+      </LogoutButtonContainer>
       <Image src={logoKlaston} alt="klaston logo" />
       <Header>
         <WelcomeMessage>Bem vindo, {user.current.name}</WelcomeMessage>

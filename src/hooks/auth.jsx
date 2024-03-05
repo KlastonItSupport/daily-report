@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useRef } from "react";
 import { api } from "../api";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
@@ -20,6 +20,14 @@ export const useAuth = () => {
   const userKey = "@DailyReport:user";
   const history = useNavigate();
   const user = useRef();
+
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(scheme),
+  });
 
   const onSubmit = useCallback(
     async ({ email, password }) => {
@@ -46,14 +54,6 @@ export const useAuth = () => {
     []
   );
 
-  const {
-    handleSubmit,
-    register,
-    formState: { errors },
-  } = useForm({
-    resolver: yupResolver(scheme),
-  });
-
   const dealingWithAuth = (shouldRedirect) => {
     const hasAccessToken = localStorage.getItem(accessTokenKey);
     const hasUser = localStorage.getItem(userKey);
@@ -73,6 +73,13 @@ export const useAuth = () => {
     return userStorage;
   };
 
+  const logout = () => {
+    localStorage.removeItem(accessTokenKey);
+    localStorage.removeItem(userKey);
+
+    history("/");
+  };
+
   return {
     onSubmit,
     handleSubmit,
@@ -81,5 +88,6 @@ export const useAuth = () => {
     dealingWithAuth,
     getUser,
     user,
+    logout,
   };
 };

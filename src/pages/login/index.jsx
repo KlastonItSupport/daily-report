@@ -1,4 +1,11 @@
-import { Container, Form, Image, ButtonContainer } from "./style";
+import {
+  Container,
+  Form,
+  Image,
+  ButtonContainer,
+  ForgotPassword,
+  ForgotPasswordContainer,
+} from "./style";
 import logoKlaston from "../../assets/klastonblue.png";
 import Input from "../../components/input";
 import { Button } from "../../components/button";
@@ -15,7 +22,7 @@ export const LoginPage = () => {
 
     setTimeout(() => {
       setIsLoading(false);
-    }, 2000);
+    }, 1000);
   };
   useEffect(() => {
     onLoading();
@@ -45,6 +52,10 @@ export const LoginPage = () => {
           <Button type="submit">Entrar</Button>
         </ButtonContainer>
       </Form>
+
+      <ForgotPasswordContainer>
+        <ForgotPassword href="/forgot/password">Recuperar Senha</ForgotPassword>
+      </ForgotPasswordContainer>
     </Container>
   );
 };

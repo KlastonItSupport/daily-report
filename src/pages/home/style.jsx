@@ -57,3 +57,10 @@ export const ButtonContainer = styled.div`
   right: 0;
   text-align: center;
 `;
+
+export const LogoutButtonContainer = styled.div`
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  text-align: center;
+`;

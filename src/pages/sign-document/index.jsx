@@ -3,7 +3,7 @@ import Popup from "reactjs-popup";
 import SignaturePad from "react-signature-canvas";
 import "./sigCanvas.css";
 import { useParams } from "react-router-dom";
-import { PdfViewer } from "../../components/pdf_viewer";
+import { PdfViewer } from "../../components/pdf-viewer";
 import { useReports } from "../../hooks/reports";
 import { Button } from "../../components/button/index";
 import klastonLogo from "../../assets/klastonblue.png";

@@ -12,20 +12,17 @@ export const Form = styled.form`
   border-radius: 10px;
   padding: 20px;
   margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
 `;
-export const Image = styled.img``;
+export const FormTitle = styled.p`
+  color: #17033a;
+  font-size: 20px;
+`;
 
 export const ButtonContainer = styled.div`
   display: flex;
   justify-content: center;
   margin-top: 30px;
-`;
-
-export const ForgotPasswordContainer = styled.div`
-  display: flex;
-  justify-content: center;
-`;
-
-export const ForgotPassword = styled.a`
-  color: #17033a;
 `;

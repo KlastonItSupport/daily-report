@@ -9,6 +9,8 @@ import { CreateDailyReportPage } from "./pages/daily-report";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { SignDocumentPage } from "./pages/sign-document";
+import { ForgotPasswordPage } from "./pages/forgot-password";
+import { RecoverPasswordPage } from "./pages/recover-password";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -28,6 +30,14 @@ const router = createBrowserRouter([
   {
     path: "sign/document/:dailyReportId",
     element: <SignDocumentPage />,
+  },
+  {
+    path: "forgot/password",
+    element: <ForgotPasswordPage />,
+  },
+  {
+    path: "recover/password/:userId/:token",
+    element: <RecoverPasswordPage />,
   },
 ]);
 
