@@ -33,9 +33,8 @@ export const ForgotPasswordPage = () => {
 
   const onSubmit = (data) => {
     setIsLoading(true);
-    console.log("DATA", data);
     api
-      .post("users/forgot-password")
+      .post("users/forgot-password", { email: data.email })
       .then((_) => {
         toast.success("Verifique seu email");
         setIsLoading(false);
