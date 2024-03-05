@@ -21,6 +21,7 @@ const DataTable = ({ data }) => {
           <tr>
             <TableCell>Nome do profissional</TableCell>
             <TableCell>Email do profissional</TableCell>
+            <TableCell>Foi assinado?</TableCell>
             <TableCell>Nome do cliente</TableCell>
             <TableCell>Email do cliente</TableCell>
             <TableCell>Inicio do serviço</TableCell>
@@ -37,6 +38,9 @@ const DataTable = ({ data }) => {
             <tr key={row.id}>
               <TableCell>{row.professionalName}</TableCell>
               <TableCell>{row.professionalEmail}</TableCell>
+              <TableCell>
+                {row.isSigned ? "Assinado" : "Não assinado"}
+              </TableCell>
               <TableCell>{row.clientName}</TableCell>
               <TableCell>{row.clientEmail}</TableCell>
               <TableCell>{row.startDate}</TableCell>
