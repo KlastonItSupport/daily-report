@@ -6,6 +6,7 @@ import {
   TableBody,
   TableCell,
 } from "./style";
+import moment from "moment";
 
 const DataTable = ({ data }) => {
   const handleServiceType = (type) => {
@@ -19,6 +20,7 @@ const DataTable = ({ data }) => {
       <Table>
         <StickyHeader>
           <tr>
+            <TableCell>Data de criação</TableCell>
             <TableCell>Nome do profissional</TableCell>
             <TableCell>Email do profissional</TableCell>
             <TableCell>Foi assinado?</TableCell>
@@ -36,6 +38,9 @@ const DataTable = ({ data }) => {
         <TableBody>
           {data.map((row) => (
             <tr key={row.id}>
+              <TableCell>
+                {moment(row.createdAt).format("DD/MM/YYYY")}
+              </TableCell>
               <TableCell>{row.professionalName}</TableCell>
               <TableCell>{row.professionalEmail}</TableCell>
               <TableCell>
@@ -45,7 +50,9 @@ const DataTable = ({ data }) => {
               <TableCell>{row.clientEmail}</TableCell>
               <TableCell>{row.startDate}</TableCell>
               <TableCell>{row.endDate}</TableCell>
-              <TableCell>{row.serviceDate}</TableCell>
+              <TableCell>
+                {moment(row.serviceDate).format("DD/MM/YYYY")}
+              </TableCell>
               <TableCell>{handleServiceType(row.serviceType)}</TableCell>
               <TableCell>
                 <div>{row.executedService}</div>
