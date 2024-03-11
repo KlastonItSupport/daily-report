@@ -21,6 +21,7 @@ import {
 import { api } from "../../api";
 import LoadingSpin from "../../components/loading";
 import { PropagateLoader } from "react-spinners";
+import { toast } from "react-toastify";
 
 export const SignDocumentPage = () => {
   const { signDocument } = useReports();
@@ -30,9 +31,19 @@ export const SignDocumentPage = () => {
   const sigCanvas = useRef({});
   const params = useParams();
 
+  const isSignaturePadEmpty = () => {
+    return sigCanvas.current.isEmpty();
+  };
+
   const clear = () => sigCanvas.current.clear();
 
   const save = async (closeModal) => {
+    if (isSignaturePadEmpty()) {
+      toast.error("Por favor, preencha com sua assinatura");
+      setIsReqLoading(false);
+      return;
+    }
+
     setIsReqLoading(true);
     const imageDataURL = sigCanvas.current
       .getTrimmedCanvas()
