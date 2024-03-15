@@ -13,7 +13,7 @@ export const columns = [
   },
   {
     Header: "Foi assinado?",
-    accessor: "signed",
+    accessor: "isSigned",
   },
   {
     Header: "Nome do cliente",
