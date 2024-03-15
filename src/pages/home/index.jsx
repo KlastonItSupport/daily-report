@@ -20,8 +20,9 @@ import { Button } from "../../components/button";
 import Modal from "../../components/modal";
 import { FormCreateDailyReport } from "../../components/form/form-create-daily-report";
 import LoadingSpin from "../../components/loading";
-import DataTable from "../../components/table";
 import { useNavigate } from "react-router-dom";
+import DataTable from "../../components/table_test/index";
+import { columns } from "./columns";
 
 export const HomePage = () => {
   const { dealingWithAuth, getUser, user, logout } = useAuth();
@@ -89,8 +90,7 @@ export const HomePage = () => {
           </ContainerInput>
         </InputsContainer>
       </Header>
-      <DataTable data={reports} />
-
+      <DataTable columnsData={columns} tableData={reports} />
       <ButtonContainer>
         <Button onClick={() => history("/create/report")} type="">
           Gerar Daily Report

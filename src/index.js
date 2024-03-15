@@ -11,6 +11,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { SignDocumentPage } from "./pages/sign-document";
 import { ForgotPasswordPage } from "./pages/forgot-password";
 import { RecoverPasswordPage } from "./pages/recover-password";
+import { ChakraProvider } from "@chakra-ui/react";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -43,8 +44,10 @@ const router = createBrowserRouter([
 
 root.render(
   <React.StrictMode>
-    <ToastContainer />
-    <RouterProvider router={router} />
+    <ChakraProvider>
+      <ToastContainer />
+      <RouterProvider router={router} />
+    </ChakraProvider>
   </React.StrictMode>
 );
 
