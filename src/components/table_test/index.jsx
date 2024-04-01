@@ -44,7 +44,7 @@ export default function ColumnsTable(props) {
     usePagination
   );
 
-  const { getTableProps, getTableBodyProps, headerGroups, page, prepareRow } =
+  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     tableInstance;
 
   const textColor = useColorModeValue("black", "white");
@@ -85,7 +85,7 @@ export default function ColumnsTable(props) {
           ))}
         </Thead>
         <Tbody {...getTableBodyProps()}>
-          {page.map((row, index) => {
+          {rows.map((row, index) => {
             prepareRow(row);
             return (
               <Tr
