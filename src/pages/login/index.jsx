@@ -43,7 +43,7 @@ export const LoginPage = () => {
         />
         <Input
           label={"Senha"}
-          margin="0px 0px 0px 0px"
+          margin="0px"
           type="password"
           {...register("password")}
           error={errors.password?.message}
