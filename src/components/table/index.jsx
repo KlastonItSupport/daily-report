@@ -183,7 +183,7 @@ const TableCustom = ({ columns, data }) => {
           ></Text>
         </Flex>
       </VStack>
-      <Box width={"95vw"} height={{ lg: "70vh", sm: "60vh" }} overflow={"auto"}>
+      <Box width={"95vw"} height={{ lg: "65vh", sm: "60vh" }} overflow={"auto"}>
         <Table>
           <Thead>
             <Tr>
