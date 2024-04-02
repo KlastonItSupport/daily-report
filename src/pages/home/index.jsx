@@ -7,12 +7,13 @@ import {
   WelcomeMessage,
   ContainerInput,
   InputsContainer,
-  CheckBoxContainer,
   ButtonContainer,
   LogoutButtonContainer,
 } from "./style";
 import logoKlaston from "../../assets/klastonblue.png";
-import Checkbox from "../../components/checkbox";
+
+//REMOVER DEPOIS
+// import Checkbox from "../../components/checkbox";
 import Input from "../../components/input";
 import searchIcon from "../../assets/search-normal.png";
 import { useReports } from "../../hooks/reports";
@@ -66,20 +67,6 @@ export const HomePage = () => {
       <Header>
         <WelcomeMessage>Bem vindo, {user.current.name}</WelcomeMessage>
         <InputsContainer>
-          <CheckBoxContainer>
-            <Checkbox
-              label={"Cliente(Nome)"}
-              margin={"0px 20px 0px 0px"}
-              checked={checkedCheckBox === 0}
-              onChange={() => handleCheckBox(0)}
-            />
-            <Checkbox
-              label={"Email do profissional"}
-              checked={checkedCheckBox === 1}
-              onChange={() => handleCheckBox(1)}
-            />
-          </CheckBoxContainer>
-
           <ContainerInput>
             <Input
               icon={<img src={searchIcon} alt="search" />}

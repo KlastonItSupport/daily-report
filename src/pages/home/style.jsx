@@ -41,8 +41,9 @@ export const ContainerInput = styled.div`
 
 export const InputsContainer = styled.div`
   display: flex;
-  width: 50%;
+  width: 48.4%;
   flex-wrap: wrap;
+  justify-content: flex-end;
 `;
 
 export const CheckBoxContainer = styled.div`

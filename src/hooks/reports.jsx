@@ -41,19 +41,24 @@ export const useReports = () => {
       clearFilter();
       return;
     }
-    const filteredReports = reports.filter((report) => {
-      if (checkedCheckBox === 0) {
-        return report.clientName
-          .toLowerCase()
-          .includes(inputValue.toLowerCase());
-      } else {
-        return report.professionalEmail
-          .toLowerCase()
-          .includes(inputValue.toLowerCase());
-      }
-    });
 
-    setReports(filteredReports);
+    if (inputValue.length >= 3) {
+      const filteredReports = reports.filter((report) => {
+        const keysToFilter = Object.keys(report).filter(
+          (key) => key !== "id" && !key.endsWith("Date")
+        ); // Excluir 'id' e campos de data
+        for (const key of keysToFilter) {
+          if (
+            typeof report[key] === "string" &&
+            report[key].toLowerCase().includes(inputValue.toLowerCase())
+          ) {
+            return true;
+          }
+        }
+        return false;
+      });
+      setReports(filteredReports);
+    }
   };
 
   const clearFilter = () => {
