@@ -1,54 +1,66 @@
+import moment from "moment";
+
 export const columns = [
   {
-    Header: "Data de criação",
-    accessor: "createdAt",
+    header: "Data de criação",
+    access: "createdAt",
+    formatData: (data) => moment(data).format("DD/MM/YYYY"),
   },
   {
-    Header: "Nome profissional",
-    accessor: "professionalName",
+    header: "Nome profissional",
+    access: "professionalName",
   },
   {
-    Header: "Email do profissional",
-    accessor: "professionalEmail",
+    header: "Email do profissional",
+    access: "professionalEmail",
   },
   {
-    Header: "Foi assinado?",
-    accessor: "isSigned",
+    header: "Foi assinado?",
+    access: "isSigned",
+    formatData: (data) => {
+      return data ? "Assinado" : "Não assinado";
+    },
   },
   {
-    Header: "Nome do cliente",
-    accessor: "clientName",
+    header: "Nome do cliente",
+    access: "clientName",
   },
   {
-    Header: "Email do cliente",
-    accessor: "clientEmail",
+    header: "Email do cliente",
+    access: "clientEmail",
   },
   {
-    Header: "Início do serviço",
-    accessor: "startDate",
+    header: "Início do serviço",
+    access: "startDate",
   },
   {
-    Header: "Fim do serviço",
-    accessor: "endDate",
+    header: "Fim do serviço",
+    access: "endDate",
   },
   {
-    Header: "Data do serviço",
-    accessor: "serviceDate",
+    header: "Data do serviço",
+    access: "serviceDate",
+    formatData: (data) => moment(data).format("DD/MM/YYYY"),
   },
   {
-    Header: "Tipo do serviço",
-    accessor: "serviceType",
+    header: "Tipo do serviço",
+    access: "serviceType",
+    formatData: (data) => {
+      if (data === 1) return "Auditoria";
+      if (data === 2) return "Consultoria";
+      if (data === 3) return "Treinamento";
+    },
   },
   {
-    Header: "Serviço executado",
-    accessor: "executedService",
+    header: "Serviço executado",
+    access: "executedService",
   },
   {
-    Header: "Pendências",
-    accessor: "pendencies",
+    header: "Pendências",
+    access: "pendencies",
   },
   {
-    Header: "Planejamento",
-    accessor: "planning",
+    header: "Planejamento",
+    access: "planning",
   },
 ];

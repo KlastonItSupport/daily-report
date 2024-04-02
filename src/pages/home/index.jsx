@@ -21,8 +21,8 @@ import Modal from "../../components/modal";
 import { FormCreateDailyReport } from "../../components/form/form-create-daily-report";
 import LoadingSpin from "../../components/loading";
 import { useNavigate } from "react-router-dom";
-import DataTable from "../../components/table_test/index";
 import { columns } from "./columns";
+import TableCustom from "../../components/table";
 
 export const HomePage = () => {
   const { dealingWithAuth, getUser, user, logout } = useAuth();
@@ -90,7 +90,7 @@ export const HomePage = () => {
           </ContainerInput>
         </InputsContainer>
       </Header>
-      <DataTable columnsData={columns} tableData={reports} />
+      <TableCustom columns={columns} data={reports} />
       <ButtonContainer>
         <Button onClick={() => history("/create/report")} type="">
           Gerar Daily Report
