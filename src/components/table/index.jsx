@@ -58,7 +58,6 @@ const TableCustom = ({ columns, data }) => {
           newDirection
         );
       } else {
-        console.log("VALOR", a[column]);
         if (typeof a[column] == "number" && typeof b[column] == "number") {
           return (a[column] - b[column]) * (newDirection === "asc" ? 1 : -1);
         }
