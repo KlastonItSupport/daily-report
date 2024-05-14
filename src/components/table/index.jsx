@@ -104,7 +104,7 @@ const TableCustom = ({ columns, data }) => {
     );
   };
 
-  const dateWhenDownloadBecomeAvailable = moment("2024-04-03");
+  const dateWhenDownloadBecomeAvailable = moment("2024-05-05");
 
   const renderTableRows = () => {
     return data.map((item, index) => {
